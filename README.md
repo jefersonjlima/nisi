@@ -18,10 +18,11 @@ $(venv)$ python3 tests/non_ideal_system.py
 ### Example
 A Non-Ideal model is described below:
 ```math
-\begin{align}
+\begin{equation}
+\begin{flalign}
 \dot{x}_0 =& x_1\\
 \dot{x}_1 =& -2 \omega_n \zeta \delta(x_1)x_1 - \omega_n^2 x_0 + A_1\sin(\omega t)
-\end{align}
+\end{flalign}
 ```
 
 where: 
