@@ -27,7 +27,7 @@ A Non-Ideal model is described below:
 
 where: 
 
-|symbol| description| value|
+|model parameter| description| value|
 |---|---|---|
 |$$c$$ ||unknown value|
 |$$k_s$$| |unknown value|
