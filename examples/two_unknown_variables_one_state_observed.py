@@ -40,7 +40,8 @@ def main():
                             'w_damping': 0.999},
                 'dyn_system': {'model_path': 'test/test1.dat',
                                 'external': None,
-                                'state_mask' : [True, False],
+                                'state_mask' : [True, True],
+                               'loss': 'mse',
                                 'x0': [0., 0.],
                                 't': [0,6,1000]
                                 }
@@ -67,7 +68,7 @@ def main():
         particle.set_ylim(params['optmizer']['lowBound'][1], params['optmizer']['upBound'][1], )
         particle.plot(pso.pbg_position[0], pso.pbg_position[1], 'x')
         particle.plot(k[0],k[1], 'o')
-        particle.grid()
+#        particle.grid()
 
 
         if pso.pbg_cost != float('inf'):

@@ -42,6 +42,7 @@ def main():
                 'dyn_system': {'model_path': '',
                                 'external': None,
                                 'state_mask' : [True, False],
+                               'loss': 'mse',
                                 'x0': [0., 0.],
                                 't': [0,6,1000]
                                 }
