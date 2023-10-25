@@ -7,7 +7,7 @@ class EqSystem(Model):
         super().__init__(params)
         self._params = params
 
-    def model(self, t, y, _):
+    def model(self, t, y, *args):
         def delta(vel):
             if abs(vel) > 0.1:
                 d = 5.0
