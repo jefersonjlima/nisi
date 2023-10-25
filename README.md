@@ -1,5 +1,8 @@
 # NisI: Non-Ideal System Identification
 
+![Platform](https://img.shields.io/badge/platform-python-lightgrey.svg?style=flat)
+![pipeline status](https://gitlab.com/jeferson.lima/nisi/badges/main/pipeline.svg)
+
 ## Overview
 This repository contains the source code NisI: Non-Ideal System Identification using Particle Swarm Optimization.
 
@@ -79,6 +82,7 @@ params = {'optmizer': {'lowBound': [1.0 , 1.0],
             'dyn_system': {'model_path': '',
                             'external': None,
                             'state_mask' : [True, False],
+                            'loss': 'mse',
                             'x0': [0., 0.],
                             't': [0,6,1000]
                             }
