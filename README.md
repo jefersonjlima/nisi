@@ -16,7 +16,7 @@ A Non-Ideal model is described below:
 ```math
 \begin{align*}
 \dot{x}_0 =& x_1 \\
-\dot{x}_1 =& -2 \omega_n \zeta \delta(x_1)x_1 - \omega_n^2 x_0 + A_1\sin(\omega t)
+\dot{x}_1 =& -2 \omega_n \zeta \delta(x_1)x_1 - \omega_n^2 x_0 + A\sin(2\pi\omega t)
 \end{align*}
 
 ```
@@ -29,7 +29,7 @@ where:
 |$$c$$ ||unknown value|
 |$$m$$ |mass|1Kg|
 |$$\omega$$ |Angular Frequency|0.5 rad/s|
-|$$A$$ | Force Gain|4|
+|$$A$$ | Force Gain|4 N|
 
 and
 
@@ -84,7 +84,7 @@ params = {'optmizer': {'lowBound': [1.0 , 1.0],
                             }
             }
 ```
-
+Note, only one state was observed of system.
 So, to run this example, please follow the steps above:
 
 ```bash
