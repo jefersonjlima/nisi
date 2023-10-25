@@ -7,8 +7,8 @@ stages:
 tests:
   stage: tests
   before_script:
-    - apk update
-    - apk add make
+    - apt-get -qq update
+    - apt-get install make
   script:
     - make prepare-env
     - source venv/bin/activate
