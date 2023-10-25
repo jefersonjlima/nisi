@@ -1,0 +1,17 @@
+image: python:3.11
+
+stages:
+  - tests
+  - lint
+
+tests:
+  stage: tests
+  before_script:
+    - apk update
+    - apk add make
+  script:
+    - make prepare-env
+    - source venv/bin/activate
+    - make test
+  only:
+    - main
