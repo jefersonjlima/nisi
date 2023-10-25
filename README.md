@@ -6,14 +6,10 @@ This repository contains the source code NisI: Non-Ideal System Identification u
 ## USAGE
 
 ```bash
-$ make install 
+$ make prepare-env
+$ source venv/bin/activate
 ```
-next 
-
-```bash
-$ source ./venv/bin/activate
-$(venv)$ python3 tests/non_ideal_system.py
-```
+Now the environment with the nisi library is available
 
 ### Example
 A Non-Ideal model is described below:
@@ -29,13 +25,11 @@ where:
 
 |model parameter| description| value|
 |---|---|---|
-|$$c$$ ||unknown value|
 |$$k_s$$| |unknown value|
+|$$c$$ ||unknown value|
 |$$m$$ |mass|1Kg|
-|$$\omega_n=\sqrt{\frac{k_s}{m}}$$ ||unknown value|
-|$$\zeta$$||unknown value|
-|$$\omega$$ |Angular Frequency|unknown value|
-|$$A_1$$ | Force Gain|4|
+|$$\omega$$ |Angular Frequency|0.5 rad/s|
+|$$A$$ | Force Gain|4|
 
 and
 
@@ -46,10 +40,10 @@ Dynamic Non-Ideal Model is define by:
 ```python
 class EqSystem(Model):
     def __init__(self, params=None):
-        super(EqSystem, self).__init__(params)
+        super().__init__(params)
         self._params = params
 
-    def model(self, t, x):
+    def model(self, t, y, *args):
         def delta(vel):
             if abs(vel) > 0.1:
                 d = 5.0
@@ -59,23 +53,54 @@ class EqSystem(Model):
         k = self.unknown_const
         ks   = k[0]
         c    = k[1]
-        w    = k[2]
+        w    = 0.5
         m    = 1
-        wn   = np.sqrt(k[0]/m)
-        zeta = k[1]/(2*m*wn)
-        dx = torch.zeros(len(self.x0),)
-        dx[0] = x[1]
-        dx[1] = -2 * zeta * wn * delta(x[1])*x[1] - wn ** 2 * x[0] + 4*np.sin(2*np.pi*k[2]*t)
-        return dx
+        A    = 4
+        wn   = np.sqrt(ks/m)
+        zeta = c/(2*m*wn)
+        dy = np.zeros(len(self.x0),)
+        dy[0] = y[1]
+        dy[1] = -2 * zeta * wn * delta(y[1])*y[1] - wn ** 2 * y[0] + A*np.sin(2*np.pi*w*t)
+        return dy
+```
+next the parameter configurations need to provide:
+```python
+params = {'optmizer': {'lowBound': [1.0 , 1.0],
+                        'upBound': [8,  8],
+                        'maxVelocity':  2, 
+                        'minVelocity': -2,
+                        'nPop': 10,
+                        'nVar': 2,
+                        'social_weight': 2.0,
+                        'cognitive_weight': 1.0,
+                        'w': 0.9,
+                        'beta': 0.1,
+                        'w_damping': 0.999},
+            'dyn_system': {'model_path': '',
+                            'external': None,
+                            'state_mask' : [True, False],
+                            'x0': [0., 0.],
+                            't': [0,6,1000]
+                            }
+            }
 ```
 
-## Results
+So, to run this example, please follow the steps above:
+
+```bash
+$(venv)$ python ./examples/two_unknown_variables_one_state_observed.py
+```
+
+### Expected Result
 
 ![](images/optimization.gif)
 
 ## Social
 
 * <sub><sub>[![Discord](https://img.shields.io/discord/1163988043536011344?logo=discord&logoColor=white)](https://discord.gg/c4yWGHcAeM)</sub></sub>
+
+# References
+* [PSO Method for WhiteBox Identification System](https://gitlab.com/jeferson.lima/wbident)
 
 # Bugs & Feature Requests
 Please report bugs and request features using the [issues](https://gitlab.com/jeferson.lima/nisi/-/issues)
