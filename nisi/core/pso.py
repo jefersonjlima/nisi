@@ -91,6 +91,6 @@ class PSO(Particle):
         self.update_particle()
         self.update_cost()
 
-        if (abs(self.p_velocity_).mean() < self.maxVelocity * 0.3):
+        if (abs(self.p_velocity_).mean() < self.maxVelocity * 0.1):
             self.particles_initializer()
 
