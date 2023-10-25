@@ -28,7 +28,7 @@ class EqSystem(Model):
 
 
 @pytest.fixture
-def sys01():
+def sys_01():
     params = {'optmizer': {'lowBound': [1.0 , 1.0],
                             'upBound': [8,  8],
                             'maxVelocity':  2, 
@@ -50,12 +50,11 @@ def sys01():
                 }
     return params
 
-
-def test_final_error(sys01):
-    f_fit = EqSystem(sys01)
+def test_error(sys_01):
+    f_fit = EqSystem(sys_01)
     k = np.array([2.5,5.1])
     f_fit.y = f_fit.simulation(k)
-    pso = PSO(f_fit, sys01)
+    pso = PSO(f_fit, sys_01)
 
     for _ in range(50):
         pso.run()
