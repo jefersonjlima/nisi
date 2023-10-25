@@ -1,0 +1,9 @@
+# Output or temporary files
+__pycache__/
+venv/
+*.egg-info/
+.pytest_cache/
+*.pyc
+dist/
+build/
+venv/
