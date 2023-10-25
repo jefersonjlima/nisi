@@ -1,4 +1,5 @@
 import numpy as np
+from functools import partial
 
 class Model:
     def __init__(self, params=None):
@@ -21,6 +22,7 @@ class Model:
         t = self._params['t']
         t = np.linspace(t[0], t[1], t[2])
         self.t = t.reshape(-1,1)
+        self.loss = partial(self.mse)
 
     def mse(self, y, y_hat):
         return ((y - y_hat)**2).mean()
@@ -52,7 +54,7 @@ class Model:
     def evaluate(self, k):
         self.unknown_const = k
         y_hat = self.ode45(self.model, self.t, self.x0)
-        loss = self.rmsle( self.y[:, self.state_mask] ,y_hat[:,self.state_mask])
+        loss = self.loss( self.y[:, self.state_mask] ,y_hat[:,self.state_mask])
         return loss, self.y, y_hat
 
     def ode45(self, f, t, x0, *args):
