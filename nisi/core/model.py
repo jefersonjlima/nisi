@@ -19,19 +19,26 @@ class Model:
         self._path = self._params['model_path']
         self.x0 = np.array(self._params['x0'])
         self.state_mask = self._params['state_mask']
+        self.loss = self._params['loss']
         t = self._params['t']
         t = np.linspace(t[0], t[1], t[2])
         self.t = t.reshape(-1,1)
-        self.loss = partial(self.mse)
+        if self.loss == 'mse':
+            self.loss = partial(self.mse)
+        elif self.loss == 'mae':
+            self.loss = partial(self.mae)
+        elif self.loss == 'rmse':
+            self.loss = partial(self.rmse)
+        elif self.loss = 'rmsle':
+            self.loss = partial(self.rmsle)
+        else:
+          self.loss = partial(self.mse)
 
     def mse(self, y, y_hat):
         return ((y - y_hat)**2).mean()
     
     def mae(self, y, y_hat):
         return (y - y_hat).mean()
-
-    def mape(self, y, y_hat):
-        return (np.fabs(y - y_hat)/y).mean()
 
     def rmse(self,y, y_hat):
         return np.sqrt(np.mean((y_hat-y)**2))
