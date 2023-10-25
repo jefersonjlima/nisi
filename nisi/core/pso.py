@@ -52,7 +52,7 @@ class PSO(Particle):
     def __init__(self, eq_system, params=None):
         super(PSO, self).__init__(params)
         if params is None:
-            params = {}
+            raise Exception('Please provide Params')
         self._params = params['optmizer']
         self._fitness = eq_system
         self.p_cost_ = np.empty([self.nPop, 1])
@@ -87,8 +87,10 @@ class PSO(Particle):
         self.w *= self.w_damping
         self.cost_tmp = self.pbg_cost
 
-    def run(self, interaction):
+    def run(self):
         self.update_particle()
         self.update_cost()
-        if (interaction % 20) == 0:
+
+        if (abs(self.p_velocity_).mean() < self.maxVelocity * 0.3):
             self.particles_initializer()
+
