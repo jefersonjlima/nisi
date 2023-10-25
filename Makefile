@@ -1,4 +1,4 @@
-.PHONY: help install test lint run clean docker
+.PHONY: help prepare-env test lint clean
 
 VENV_NAME?=venv
 VENV_ACTIVATE=. $(VENV_NAME)/bin/activate
@@ -11,7 +11,7 @@ help:
 	@echo "make test"
 	@echo "       run tests"
 	@echo "make lint"
-	@echo "       run pylint and mypy"
+	@echo "       run pylint"
 
 prepare-env:
 	python3 -m pip install virtualenv
