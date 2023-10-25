@@ -29,7 +29,7 @@ class Model:
             self.loss = partial(self.mae)
         elif self.loss == 'rmse':
             self.loss = partial(self.rmse)
-        elif self.loss = 'rmsle':
+        elif self.loss == 'rmsle':
             self.loss = partial(self.rmsle)
         else:
           self.loss = partial(self.mse)
