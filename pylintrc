@@ -4,7 +4,7 @@ load-plugins=
 
 [MESSAGES CONTROL]
 # One day would be awesome to disable only some docstrings (module ones would be mandatory).
-disable=missing-docstring,attribute-defined-outside-init
+disable=missing-docstring,attribute-defined-outside-init,redefined-outer-name
 
 [REPORTS]
 output-format=colorized
@@ -17,7 +17,7 @@ dummy-variables-rgx=_|dummy
 ignore-mixin-members=yes
 
 [BASIC]
-good-names=dx,x,y,d,k,ks,c,w,wn,t,m
+good-names=dy,dx,x,y,d,k,ks,c,w,wn,t,m
 
 [DESIGN]
 min-public-methods=1

@@ -7,7 +7,7 @@ class EqSystem(Model):
         super().__init__(params)
         self._params = params
 
-    def model(self, t, y, *args):
+    def model(self, t, y, _):
         def delta(vel):
             if abs(vel) > 0.1:
                 d = 5.0
@@ -28,7 +28,7 @@ class EqSystem(Model):
 
 
 @pytest.fixture
-def sys_01():
+def fixture_sys_a():
     params = {'optmizer': {'lowBound': [1.0 , 1.0],
                             'upBound': [8,  8],
                             'maxVelocity':  2, 
@@ -50,13 +50,12 @@ def sys_01():
                 }
     return params
 
-def test_error(sys_01):
-    f_fit = EqSystem(sys_01)
+def test_error(fixture_sys_a):
+    f_fit = EqSystem(fixture_sys_a)
     k = np.array([2.5,5.1])
     f_fit.y = f_fit.simulation(k)
-    pso = PSO(f_fit, sys_01)
+    pso = PSO(f_fit, fixture_sys_a)
 
     for _ in range(50):
         pso.run()
     assert pso.pbg_cost < 0.001
-
