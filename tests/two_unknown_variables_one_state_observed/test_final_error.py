@@ -43,6 +43,7 @@ def sys01():
                 'dyn_system': {'model_path': 'test/test1.dat',
                                 'external': None,
                                 'state_mask' : [True, False],
+                                'loss': 'mse',
                                 'x0': [0., 0.],
                                 't': [0,6,1000]
                                 }
@@ -56,7 +57,7 @@ def test_final_error(sys01):
     f_fit.y = f_fit.simulation(k)
     pso = PSO(f_fit, sys01)
 
-    for _ in range(100):
+    for _ in range(50):
         pso.run()
     assert pso.pbg_cost < 0.001
 
