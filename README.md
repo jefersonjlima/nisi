@@ -1,8 +1,9 @@
 # NisI: Non-Ideal System Identification
 
 ![Platform](https://img.shields.io/badge/platform-python-lightgrey.svg?style=flat)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![pipeline status](https://gitlab.com/jeferson.lima/nisi/badges/main/pipeline.svg)
+
 
 ## Overview
 This repository contains the source code NisI: Non-Ideal System Identification using Particle Swarm Optimization.
@@ -103,11 +104,13 @@ $(venv)$ python ./examples/two_unknown_variables_one_state_observed.py
 final output:
 
 ```python
-i: 99, e: [0.00016221], predict: [2.50432435 5.09982733]
+i: 99, e: [0.00041643], predict: [2.54475561 5.10002245]
 ```
 
 ![](images/duffing_problem.gif)
+
 final output:
+
 ```python
 i: 99, e: [2.06116586e-06], predict: [1.00015914 0.38508506]
 ```
