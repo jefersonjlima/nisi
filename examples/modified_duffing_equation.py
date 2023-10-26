@@ -4,54 +4,47 @@ from nisi import PSO, Model
 
 class EqSystem(Model):
     def __init__(self, params=None):
-        super(EqSystem, self).__init__(params)
+        super().__init__(params)
         self._params = params
 
     def model(self, t, y, *args):
-        def delta(vel):
-            if abs(vel) > 0.1:
-                d = 5.0
-            else:
-                d = 0.5
-            return d
         k = self.unknown_const
-        ks   = k[0]
-        c    = k[1]
-        w    = k[2]
-        m    = 1
-        wn   = np.sqrt(ks/m)
-        zeta = c/(2*m*wn)
+        alpha = 0.5
+        beta  = 1
+        delta = -1
+        omega = k[0]
+        F     = k[1]
+
         dy = np.zeros(len(self.x0),)
         dy[0] = y[1]
-        dy[1] = -2 * zeta * wn * delta(y[1])*y[1] - wn ** 2 * y[0] + 4*np.sin(2*np.pi*w*t)
+        dy[1] = -alpha*y[1] -delta*y[0] -beta*y[0]**3 + F*np.cos(y[2])
+        dy[2] = omega
         return dy
 
-
 def main():
-    params = {'optmizer': {'lowBound': [1.0 , 1.0 ,0.1],
-                            'upBound': [8,  8, 5],
-                            'maxVelocity':  5, 
-                            'minVelocity': -5,
+    params = {'optmizer': {'lowBound': [0.1 , 0.1],
+                            'upBound': [5.0,  0.5],
+                            'maxVelocity':  2, 
+                            'minVelocity': -2,
                             'nPop': 10,
-                            'nVar': 3,
+                            'nVar': 2,
                             'social_weight': 2.0,
-                            'cognitive_weight': 2.0,
+                            'cognitive_weight': 1.0,
                             'w': 0.9,
                             'beta': 0.1,
                             'w_damping': 0.999,
                             'escape_min_vel': 0.05,
-                           'escape_min_error': 0.001},
+                           'escape_min_error': 0.5},
                 'dyn_system': {'model_path': '',
                                 'external': None,
-                                'state_mask' : [True, False],
+                                'state_mask' : [True, False, False],
                                'loss': 'rmse',
-                                'x0': [0., 0.],
-                                't': [0,6,1000]
+                                'x0': [0., 0., 0.],
+                                't': [0,50,1000]
                                 }
                 }
-    # suface_plot(params)
     f_fit = EqSystem(params)
-    k = np.array([2.5,5.1,0.54])
+    k = np.array([1.,0.385])
     f_fit.y = f_fit.simulation(k)
     pso = PSO(f_fit, params)
     cost = []
@@ -63,7 +56,7 @@ def main():
     func2  = fig.add_subplot(224, frameon=False)
     plt.show(block=False)
 
-    for i in range(500):
+    for i in range(150):
         print(f'i: {i}, e: {pso.pbg_cost}, predict: {pso.pbg_position}')
         particle.cla()
         for j in range(params['optmizer']['nPop']):
@@ -80,7 +73,8 @@ def main():
             position.append(pso.pbg_position[0])
         graph_cost.cla()
         graph_cost.plot(cost)
-        graph_cost.set_xlim(0, 500)
+        graph_cost.set_xlim(0, 150)
+        graph_cost.set_ylim(0, 1)
         graph_cost.set_title('Error')
 
         func1.cla()
@@ -99,6 +93,7 @@ def main():
 
         plt.draw()
         plt.pause(0.01)
+        plt.savefig('temp/animation_'+str(i)+'.png')
         pso.run()
 
 if __name__ == "__main__":

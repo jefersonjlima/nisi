@@ -37,11 +37,13 @@ def main():
                             'cognitive_weight': 1.0,
                             'w': 0.9,
                             'beta': 0.1,
-                            'w_damping': 0.999},
-                'dyn_system': {'model_path': 'test/test1.dat',
+                            'w_damping': 0.999,
+                            'escape_min_vel': 0.05,
+                            'escape_min_error': 0.5},
+                'dyn_system': {'model_path': '',
                                 'external': None,
                                 'state_mask' : [True, True],
-                               'loss': 'mse',
+                               'loss': 'rmse',
                                 'x0': [0., 0.],
                                 't': [0,6,1000]
                                 }
