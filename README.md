@@ -1,7 +1,7 @@
 # NisI: Non-Ideal System Identification
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Platform](https://img.shields.io/badge/platform-python-lightgrey.svg?style=flat)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![pipeline status](https://gitlab.com/jeferson.lima/nisi/badges/main/pipeline.svg)
 
 ## Overview
