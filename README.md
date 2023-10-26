@@ -98,7 +98,20 @@ $(venv)$ python ./examples/two_unknown_variables_one_state_observed.py
 
 ### Expected Result
 
-![](images/optimization.gif)
+![](images/generic_problem.gif)
+
+final output:
+
+```python
+i: 99, e: [0.00016221], predict: [2.50432435 5.09982733]
+```
+
+![](images/duffing_problem.gif)
+final output:
+```python
+i: 99, e: [2.06116586e-06], predict: [1.00015914 0.38508506]
+```
+
 
 ## Social
 
