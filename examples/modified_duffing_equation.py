@@ -93,7 +93,6 @@ def main():
 
         plt.draw()
         plt.pause(0.01)
-        plt.savefig('temp/animation_'+str(i)+'.png')
         pso.run()
 
 if __name__ == "__main__":
