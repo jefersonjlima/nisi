@@ -12,6 +12,8 @@ class Particle:
         self.minVelocity = self._params['minVelocity']
         self.maxVelocity = self._params['maxVelocity']
         self.beta = self._params['beta']
+        self.escape_min_vel = self._params['escape_min_vel']
+        self.escape_min_error = self._params['escape_min_error']
 
         self.lowBound = np.empty([self.nPop, self.nVar])
         self.upBound = np.empty([self.nPop, self.nVar])
@@ -90,7 +92,10 @@ class PSO(Particle):
     def run(self):
         self.update_particle()
         self.update_cost()
-
-        if (abs(self.p_velocity_).mean() < self.maxVelocity * 0.1):
-            self.particles_initializer()
+        # Escape local mininal
+        if self.pbg_cost > self.escape_min_error:
+            if (abs(self.p_velocity_).mean() < self.maxVelocity * self.escape_min_vel):
+                self.particles_initializer()
+        else:
+            self.w_damping = 1.0
 
