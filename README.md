@@ -34,13 +34,14 @@ Now the environment with the nisi library is available. An example can be execut
 
 ### Examples
 To demonstrate the parametric identification of a system in a chaotic regime, we will present the dynamic system of the Duffing oscillator.
-A Non-Ideal model is described below:
+
+So, the Non-Ideal model is described below:
 
 ```math
 \begin{align*}
 \dot{x}_0 =& x_1 \\
 \dot{x}_1 =& -\alpha x_1 -\delta x_0 - \beta x_0^3 + F\cos(x_2) \\
-\dot{x}_2 = \omega
+\dot{x}_2 =& \omega
 \end{align*}
 ```
 
