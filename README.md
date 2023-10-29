@@ -49,13 +49,13 @@ where:
 
 |model parameter| value|
 |---|---|
-|$$\alpha$$|unknown value|
-|$$\beta$$ |unknown value|
-|$$\delta$$ |1Kg|
+|$$\alpha$$| 0.5|
+|$$\beta$$ | 1.0|
+|$$\delta$$ | -1.0|
 |$$\omega$$ |unknown value|
 |$$F$$ | unknown value|
 
-Dynamic Non-Ideal Model is define by:
+Dynamic Non-Ideal Model is define by the `EqSystem` class:
 
 ```python
 class EqSystem(Model):
