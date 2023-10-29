@@ -39,7 +39,7 @@ A Non-Ideal model is described below:
 ```math
 \begin{align*}
 \dot{x}_0 =& x_1 \\
-\dot{x}_1 =& -\alpha x_1 -\delta x_0 - \beta x_0^3 + F\cos(x_2)
+\dot{x}_1 =& -\alpha x_1 -\delta x_0 - \beta x_0^3 + F\cos(x_2) \\
 \dot{x}_2 = \omega
 \end{align*}
 ```
@@ -48,9 +48,9 @@ where:
 
 |model parameter| value|
 |---|---|
-|$$\alphas$$|unknown value|
+|$$\alpha$$|unknown value|
 |$$\beta$$ |unknown value|
-|$$delta$$ |1Kg|
+|$$\delta$$ |1Kg|
 |$$\omega$$ |unknown value|
 |$$F$$ | unknown value|
 
@@ -103,7 +103,11 @@ params = {'optmizer': {'lowBound': [0.1 , 0.1],
                 }
 ```
 
-Note, only $x_0$ state was observed of system `state_mask: [True, False, False]`.
+Note, only one state was observed of system:
+```python
+#            x_0   x_1    x_2
+state_mask: [True, False, False]
+```
 So, to run this example, please follow the steps above:
 
 ```bash
