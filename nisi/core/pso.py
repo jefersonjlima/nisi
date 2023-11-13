@@ -26,8 +26,8 @@ class Particle:
 
     def particles_initializer(self) -> None:
         self.lowBound = np.ones([self.nPop, self.nVar]) * np.array(self._params['lowBound'])
-        self.upBound = np.ones([self.nPop, self.nVar])  *  np.array(self._params['upBound'])
-        self.p_position_ = (self.upBound - self.lowBound) *np.random.rand(self.nPop, self.nVar) + self.lowBound
+        self.upBound =  np.ones([self.nPop, self.nVar]) * np.array(self._params['upBound'])
+        self.p_position_ = (self.upBound - self.lowBound) * np.random.rand(self.nPop, self.nVar) + self.lowBound
         self.p_velocity_ = np.zeros([self.nPop, self.nVar])
 
     def limits(self, values, state=None):
@@ -73,7 +73,6 @@ class PSO(Particle):
         self.pbg_position = self.pb_position_[self.pb_cost_.argmin(), :]
         self.pbg_y_hat = self.y_hat
 
-
     def update_cost(self):
         for i in range(self.nPop):
             self.p_cost_[i], self.y, self.y_hat = self._fitness.evaluate(self.p_position_[i, :])
@@ -97,5 +96,15 @@ class PSO(Particle):
             if (abs(self.p_velocity_).mean() < self.maxVelocity * self.escape_min_vel):
                 self.particles_initializer()
         else:
-            self.w_damping = 1.0
+            if (abs(self.p_velocity_).mean() < self.maxVelocity * self.escape_min_vel):
+                self.w_damping = 1.01
+                self.w = 1.0
+            else:
+                self.w = self._params['w']
+                self.w_damping = self._params['w_damping']
+
+
+
+
+
 
