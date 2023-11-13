@@ -15,10 +15,10 @@ In experimental studies of non-ideal dynamic models, typically due to physical o
 [NisI](https://gitlab.com/jeferson.lima/nisi) provides an installation script to simplify its installation and usage. Some prerequisites are essential before preparing the environment.
 
 ### Requirements
-* [cmake](https://cmake.org/)
+* [make](https://www.gnu.org/software/make/)
 * [python](https://www.python.org/downloads/)
 
-Nextm, the script for setting up the environment can be utilized.
+Next, the script setting up the environment can be utilized.
 
 ```bash
 $ make prepare-env
@@ -49,8 +49,8 @@ where:
 
 |model parameter| value|
 |---|---|
-|$$\alpha$$| 0.5|
-|$$\beta$$ | 1.0|
+|$$\alpha$$ | 0.5|
+|$$\beta$$  | 1.0|
 |$$\delta$$ | -1.0|
 |$$\omega$$ |unknown value|
 |$$F$$ | unknown value|
@@ -132,7 +132,6 @@ i: 149, e: [2.06116586e-06], predict: [1.00015914 0.38508506]
 * <sub><sub>[![Discord](https://img.shields.io/discord/1163988043536011344?logo=discord&logoColor=white)](https://discord.gg/c4yWGHcAeM)</sub></sub>
 
 # References
-* [PSO Method for WhiteBox Identification System](https://gitlab.com/jeferson.lima/wbident)
 
 # Bugs & Feature Requests
 Please report bugs and request features using the [issues](https://gitlab.com/jeferson.lima/nisi/-/issues)
