@@ -58,6 +58,8 @@ def test_error(fixture_sys_a):
     f_fit.y = f_fit.simulation(k)
     pso = PSO(f_fit, fixture_sys_a)
 
-    for _ in range(50):
+    for i in range(50):
         pso.run()
+    print("\n============== Final report: ==================")
+    print(f'e: {pso.pbg_cost}, predict: {pso.pbg_position}')
     assert pso.pbg_cost < 0.001
