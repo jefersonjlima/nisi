@@ -24,7 +24,7 @@ $(VENV_NAME)/bin/activate: setup.py
 	${PYTHON} -m pip install -e .  --upgrade --ignore-installed
 
 test: venv
-	${PYTHON} -m pytest -vv tests
+	${PYTHON} -m pytest -s tests
 
 lint: venv
 	${PYTHON} -m pylint nisi tests
