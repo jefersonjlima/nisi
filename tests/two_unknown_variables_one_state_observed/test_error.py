@@ -8,29 +8,23 @@ class EqSystem(Model):
         self._params = params
 
     def model(self, t, y, *args):
-        def delta(vel):
-            if abs(vel) > 0.1:
-                d = 5.0
-            else:
-                d = 0.5
-            return d
         k = self.unknown_const
-        ks   = k[0]
-        c    = k[1]
-        w    = 0.5
-        m    = 1
-        wn   = np.sqrt(ks/m)
-        zeta = c/(2*m*wn)
+        alpha = 0.5
+        beta  = 1
+        delta = -1
+        omega = k[0]
+        F     = k[1]
+
         dy = np.zeros(len(self.x0),)
         dy[0] = y[1]
-        dy[1] = -2 * zeta * wn * delta(y[1])*y[1] - wn ** 2 * y[0] + 4*np.sin(2*np.pi*w*t)
+        dy[1] = -alpha*y[1] -delta*y[0] -beta*y[0]**3 + F*np.cos(y[2])
+        dy[2] = omega
         return dy
-
 
 @pytest.fixture
 def fixture_sys_a():
-    params = {'optmizer': {'lowBound': [1.0 , 1.0],
-                            'upBound': [8,  8],
+    params = {'optmizer': {'lowBound': [0.1 , 0.1],
+                            'upBound': [5.0,  0.5],
                             'maxVelocity':  2, 
                             'minVelocity': -2,
                             'nPop': 10,
@@ -40,25 +34,26 @@ def fixture_sys_a():
                             'w': 0.9,
                             'beta': 0.1,
                             'w_damping': 0.999,
-                            'escape_min_vel': 0.05,
-                            'escape_min_error': 0.5},
-                'dyn_system': {'model_path': 'test/test1.dat',
+                            'escape_min_vel': 0.001,
+                           'escape_min_error': 5e-3},
+                'dyn_system': {'model_path': '',
                                 'external': None,
-                                'state_mask' : [True, False],
-                                'loss': 'rmse',
-                                'x0': [0., 0.],
-                                't': [0,6,1000]
+                                'state_mask' : [True, False, False],
+                               'loss': 'mse',
+                                'x0': [0., 0., 0.],
+                                't': [0,50,500]
                                 }
                 }
     return params
 
 def test_error(fixture_sys_a):
     f_fit = EqSystem(fixture_sys_a)
-    k = np.array([2.5,5.1])
+    k = np.array([1.,0.385])
+    f_fit.y = f_fit.simulation(k)
     f_fit.y = f_fit.simulation(k)
     pso = PSO(f_fit, fixture_sys_a)
 
-    for i in range(50):
+    for i in range(250):
         pso.run()
     print("\n============== Final report: ==================")
     print(f'e: {pso.pbg_cost}, predict: {pso.pbg_position}')
