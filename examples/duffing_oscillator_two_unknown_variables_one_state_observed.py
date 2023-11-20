@@ -33,14 +33,14 @@ def main():
                             'w': 0.9,
                             'beta': 0.1,
                             'w_damping': 0.999,
-                            'escape_min_vel': 0.05,
-                           'escape_min_error': 0.5},
+                            'escape_min_vel': 0.001,
+                           'escape_min_error': 5e-3},
                 'dyn_system': {'model_path': '',
                                 'external': None,
                                 'state_mask' : [True, False, False],
-                               'loss': 'rmse',
+                               'loss': 'mse',
                                 'x0': [0., 0., 0.],
-                                't': [0,50,1000]
+                                't': [0,50,500]
                                 }
                 }
     f_fit = EqSystem(params)
@@ -56,7 +56,7 @@ def main():
     func2  = fig.add_subplot(224, frameon=False)
     plt.show(block=False)
 
-    for i in range(150):
+    for i in range(500):
         print(f'i: {i}, e: {pso.pbg_cost}, predict: {pso.pbg_position}')
         particle.cla()
         for j in range(params['optmizer']['nPop']):
@@ -67,13 +67,12 @@ def main():
         particle.plot(k[0],k[1], 'o')
 #        particle.grid()
 
-
         if pso.pbg_cost != float('inf'):
             cost.append(pso.pbg_cost[0])
             position.append(pso.pbg_position[0])
         graph_cost.cla()
-        graph_cost.plot(cost)
-        graph_cost.set_xlim(0, 150)
+        graph_cost.semilogy(cost)
+        graph_cost.set_xlim(0, 500)
         graph_cost.set_ylim(0, 1)
         graph_cost.set_title('Error')
 
@@ -82,12 +81,12 @@ def main():
         func1.plot(pso.pbg_y_hat[:,0],'--')
         func1.plot(pso.y[:,1])
         func1.plot(pso.pbg_y_hat[:,1],'--')
-        func1.legend(['y0','y0_hat','y1','y1_hat'])
+        func1.legend([r'$y_0$',r'$\hat{y_0}$',r'$y_1$','$\hat{y_1}$'])
 
         func2.cla()
         func2.plot(pso.y[:,0],pso.y[:,1])
         func2.plot(pso.pbg_y_hat[:,0], pso.pbg_y_hat[:,1],'--')
-        func2.legend(['y','y_hat'])
+        func2.legend(['y',r'$\hat{y}$'])
         func2.set_xlabel('y')
         func2.set_ylabel('dot_y')
 
