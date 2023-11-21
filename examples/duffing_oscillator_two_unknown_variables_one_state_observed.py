@@ -33,12 +33,12 @@ def main():
                             'w': 0.9,
                             'beta': 0.1,
                             'w_damping': 0.999,
-                            'escape_min_vel': 0.001,
-                           'escape_min_error': 5e-3},
+                            'escape_min_vel_percent': 0.001,
+                           'escape_min_error': 5e-6},
                 'dyn_system': {'model_path': '',
                                 'external': None,
                                 'state_mask' : [True, False, False],
-                               'loss': 'mse',
+                               'loss': 'rmse',
                                 'x0': [0., 0., 0.],
                                 't': [0,50,500]
                                 }
