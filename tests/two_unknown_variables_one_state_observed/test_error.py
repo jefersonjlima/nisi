@@ -34,12 +34,12 @@ def fixture_sys_a():
                             'w': 0.9,
                             'beta': 0.1,
                             'w_damping': 0.999,
-                            'escape_min_vel': 0.001,
-                           'escape_min_error': 5e-3},
+                            'escape_min_vel_percent': 0.001,
+                           'escape_min_error': 5e-6},
                 'dyn_system': {'model_path': '',
                                 'external': None,
                                 'state_mask' : [True, False, False],
-                               'loss': 'mse',
+                               'loss': 'rmse',
                                 'x0': [0., 0., 0.],
                                 't': [0,50,500]
                                 }
@@ -50,10 +50,9 @@ def test_error(fixture_sys_a):
     f_fit = EqSystem(fixture_sys_a)
     k = np.array([1.,0.385])
     f_fit.y = f_fit.simulation(k)
-    f_fit.y = f_fit.simulation(k)
     pso = PSO(f_fit, fixture_sys_a)
 
-    for i in range(250):
+    for i in range(500):
         pso.run()
     print("\n============== Final report: ==================")
     print(f'e: {pso.pbg_cost}, predict: {pso.pbg_position}')
