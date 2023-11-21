@@ -43,9 +43,6 @@ class Model:
     def rmse(self,y, y_hat):
         return np.sqrt(np.mean((y_hat-y)**2))
 
-    def rmsle(self,y, y_hat):
-        return np.sqrt(np.square(np.log(y_hat + 1) - np.log(y + 1)).mean())
-
     @property
     def unknown_const(self):
         return self._unknown_const
