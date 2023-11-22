@@ -14,10 +14,14 @@ class EqSystem(Model):
         delta = -1
         omega = k[0]
         F     = k[1]
+        # non-ideal coeff [1]
+        a_0 = 2.0
+        b_0 = 0.01
+        c_0 = 0.0
 
         dy = np.zeros(len(self.x0),)
         dy[0] = y[1]
-        dy[1] = -alpha*y[1] -delta*y[0] -beta*y[0]**3 + F*np.cos(y[2])
+        dy[1] = -alpha*y[1] -delta*y[0] -beta*y[0]**3 + F*np.cos(y[2]  + a_0*np.sin(b_0*y[2]+c_0))
         dy[2] = omega
         return dy
 
@@ -33,8 +37,8 @@ def main():
                             'w': 0.9,
                             'beta': 0.1,
                             'w_damping': 0.999,
-                            'escape_min_vel_percent': 0.001,
-                           'escape_min_error': 5e-6},
+                            'escape_min_vel_percent': 0.0005,
+                           'escape_min_error': 1e-4},
                 'dyn_system': {'model_path': '',
                                 'external': None,
                                 'state_mask' : [True, False, False],
@@ -65,7 +69,8 @@ def main():
         particle.set_ylim(params['optmizer']['lowBound'][1], params['optmizer']['upBound'][1], )
         particle.plot(pso.pbg_position[0], pso.pbg_position[1], 'x')
         particle.plot(k[0],k[1], 'o')
-#        particle.grid()
+        particle.set_title(r'$[F,\omega]=$'
+                                +np.array2string(pso.pbg_position), fontsize = 8) 
 
         if pso.pbg_cost != float('inf'):
             cost.append(pso.pbg_cost[0])
@@ -74,7 +79,7 @@ def main():
         graph_cost.semilogy(cost)
         graph_cost.set_xlim(0, 500)
         graph_cost.set_ylim(0, 1)
-        graph_cost.set_title('Error')
+        graph_cost.set_title(r'$e$=' + str(pso.pbg_cost), fontsize=8)
 
         func1.cla()
         func1.plot(pso.y[:,0])
@@ -92,7 +97,12 @@ def main():
 
         plt.draw()
         plt.pause(0.01)
+        plt.savefig('temp/animation_'+str(i)+'.png')
         pso.run()
 
 if __name__ == "__main__":
     main()
+
+
+# References
+# [1] Felix, Jorge Luiz Palacios, et al. “On Energy Transfer between Vibration Modes under Frequency-Varying Excitations for Energy Harvesting.” Applied Mechanics and Materials, vol. 849, Trans Tech Publications, Ltd., Aug. 2016, pp. 65–75. Crossref, doi:10.4028/www.scientific.net/amm.849.65. 
