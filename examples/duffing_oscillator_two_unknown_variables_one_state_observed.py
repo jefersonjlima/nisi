@@ -38,7 +38,7 @@ def main():
                             'beta': 0.1,
                             'w_damping': 0.999,
                             'escape_min_vel_percent': 0.0005,
-                           'escape_min_error': 1e-4},
+                           'escape_min_error': 2e-3},
                 'dyn_system': {'model_path': '',
                                 'external': None,
                                 'state_mask' : [True, False, False],
@@ -97,7 +97,7 @@ def main():
 
         plt.draw()
         plt.pause(0.01)
-        plt.savefig('temp/animation_'+str(i)+'.png')
+#        plt.savefig('temp/animation_'+str(i)+'.png')
         pso.run()
 
 if __name__ == "__main__":
