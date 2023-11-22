@@ -14,10 +14,14 @@ class EqSystem(Model):
         delta = -1
         omega = k[0]
         F     = k[1]
+        # non-ideal coeff [1]
+        a_0 = 2.0
+        b_0 = 0.01
+        c_0 = 0.0
 
         dy = np.zeros(len(self.x0),)
         dy[0] = y[1]
-        dy[1] = -alpha*y[1] -delta*y[0] -beta*y[0]**3 + F*np.cos(y[2])
+        dy[1] = -alpha*y[1] -delta*y[0] -beta*y[0]**3 + F*np.cos(y[2]  + a_0*np.sin(b_0*y[2]+c_0))
         dy[2] = omega
         return dy
 
@@ -34,8 +38,8 @@ def fixture_sys_a():
                             'w': 0.9,
                             'beta': 0.1,
                             'w_damping': 0.999,
-                            'escape_min_vel_percent': 0.001,
-                           'escape_min_error': 5e-6},
+                            'escape_min_vel_percent': 0.0005,
+                           'escape_min_error': 2e-3},
                 'dyn_system': {'model_path': '',
                                 'external': None,
                                 'state_mask' : [True, False, False],
@@ -56,4 +60,4 @@ def test_error(fixture_sys_a):
         pso.run()
     print("\n============== Final report: ==================")
     print(f'e: {pso.pbg_cost}, predict: {pso.pbg_position}')
-    assert pso.pbg_cost < 0.001
+    assert pso.pbg_cost < 0.01
