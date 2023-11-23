@@ -40,7 +40,7 @@ So, the Non-Ideal model is described below:
 ```math
 \begin{align*}
 \dot{x}_0 =& x_1 \\
-\dot{x}_1 =& -\alpha x_1 -\delta x_0 - \beta x_0^3 + F\cos(x_2) \\
+\dot{x}_1 =& -\alpha x_1 -\delta x_0 - \beta x_0^3 + F\cos(x_2 + a_0\sin[b_0x_2 + c_0]) \\
 \dot{x}_2 =& \omega
 \end{align*}
 ```
@@ -73,7 +73,7 @@ class EqSystem(Model):
 
         dx = np.zeros(len(self.x0),)
         dx[0] = x[1]
-        dx[1] = -alpha*x[1] -delta*x[0] -beta*x[0]**3 + F*np.cos(x[2])
+        dy[1] = -alpha*y[1] -delta*y[0] -beta*y[0]**3 + F*np.cos(y[2] + a_0*np.sin(b_0*y[2]+c_0))
         dx[2] = omega
         return dx
 ```
@@ -82,32 +82,32 @@ Next the parameter configurations need to provide:
 
 ```python
 params = {'optmizer': {'lowBound': [0.1 , 0.1],
-                            'upBound': [5.0,  0.5],
-                            'maxVelocity':  2, 
-                            'minVelocity': -2,
-                            'nPop': 10,
-                            'nVar': 2,
-                            'social_weight': 2.0,
-                            'cognitive_weight': 1.0,
-                            'w': 0.9,
-                            'beta': 0.1,
-                            'w_damping': 0.999,
-                            'escape_min_vel': 0.05,
-                           'escape_min_error': 0.5},
-                'dyn_system': {'model_path': '',
-                                'external': None,
-                                'state_mask' : [True, False, False],
-                               'loss': 'rmse',
-                                'x0': [0., 0., 0.],
-                                't': [0,50,1000]
-                                }
-                }
+                        'upBound': [5.0,  0.5],
+                        'maxVelocity':  2, 
+                        'minVelocity': -2,
+                        'nPop': 10,
+                        'nVar': 2,
+                        'social_weight': 2.0,
+                        'cognitive_weight': 1.0,
+                        'w': 0.9,
+                        'beta': 0.1,
+                        'w_damping': 0.999,
+                        'escape_min_vel_percent': 0.0005,
+                       'escape_min_error': 2e-3},
+            'dyn_system': {'model_path': '',
+                            'external': None,
+                            'state_mask' : [True, False, False],
+                           'loss': 'rmse',
+                            'x0': [0., 0., 0.],
+                            't': [0,50,500]
+                            }
+            }
 ```
 
 Note, only one state was observed of system:
 ```python
-#            x_0   x_1    x_2
-state_mask: [True, False, False]
+#            x_0    x_1    x_2
+state_mask: [True,  False, False]
 ```
 So, to run this example, please follow the steps above:
 
@@ -122,7 +122,7 @@ $(venv)$ python ./examples/duffing_oscilator_two_unknown_variables_one_state_obs
 The simulation of the experimental system has the parameters $\omega = 1.0$ and $F = 0.385$. The algorithm found the parameters with a significantly small error as shown below
 
 ```python
-i: 149, e: [2.06116586e-06], predict: [1.00015914 0.38508506]
+e: [8.7e-06], predict: [100000017 0.38499979]
 ```
 
 > An `modified_oscillator` model has been added to the `examples/` folder.
