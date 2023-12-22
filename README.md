@@ -49,6 +49,8 @@ where:
 
 |model parameter| value|
 |---|---|
+|$$a_0$$|non-ideal term|
+|$$b_0$$|non-ideal term|
 |$$\alpha$$ | 0.5|
 |$$\beta$$  | 1.0|
 |$$\delta$$ | -1.0|
@@ -117,7 +119,7 @@ $(venv)$ python ./examples/duffing_oscilator_two_unknown_variables_one_state_obs
 
 ### Expected Result
 
-![](images/duffing_problem.gif)
+![](images/generic_problem.gif)
 
 The simulation of the experimental system has the parameters $\omega = 1.0$ and $F = 0.385$. The algorithm found the parameters with a significantly small error as shown below
 
