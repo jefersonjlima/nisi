@@ -129,6 +129,22 @@ e: [8.7e-06], predict: [100000017 0.38499979]
 
 > An `modified_oscillator` model has been added to the `examples/` folder.
 
+
+## Citation
+Please cite our work if you use it.
+
+```
+@article{Lima2024,
+  title = {NisI: A Tool for Non-Ideal System Identification},
+  DOI = {10.36227/techrxiv.170630655.56990506/v1},
+  publisher = {Institute of Electrical and Electronics Engineers (IEEE)},
+  author = {Lima,  Jeferson José de and Kaster,  Mauricio S and Martins,  Marcella S R and Ribeiro,  Mauricio A and Tusset,  Angelo M and Balthazar,  José M},
+  year = {2024},
+  month = jan 
+}
+```
+
+
 ## Social
 
 * <sub><sub>[![Discord](https://img.shields.io/discord/1163988043536011344?logo=discord&logoColor=white)](https://discord.gg/c4yWGHcAeM)</sub></sub>
