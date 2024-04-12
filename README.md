@@ -131,7 +131,7 @@ e: [8.7e-06], predict: [100000017 0.38499979]
 
 
 ## Citation
-Please cite our work if you use it.
+Please cite [our work](https://www.techrxiv.org/doi/full/10.36227/techrxiv.170630655.56990506/v2) if you use it.
 
 ```
 @article{Lima2024,
